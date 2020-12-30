@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- font awesome -->
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"     integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <!-- sortable -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <!-- css -->
     <link rel="stylesheet" href="./public/css/style.css">
 </head>
 <body>
@@ -32,36 +36,65 @@
         <button id="start">JOUER</button>
 
     </div>
+    <div id="allGames">
+        <div id="launchGame">
+            <div class="text">
+                <p>Joue à ce petit jeu, et gagne des points ! <br>
+                    Attention, si tu avais la carte "Bonus", perdre le jeu te fera perdre ta carte...</p>
+                <p>Bon jeu ! &#128540;</p>
+                <button id="startGame">START</button>    
+            </div>
+        </div>
+        <canvas class="game" id="canvasBricks" height="300" width="300"></canvas>
+        <canvas class="game" id="canvasSnake"></canvas>
+        <div class="game" id="scrabble">
+            <div id="givenLetters" class="list">
+                <ul class="letters">
+    
+                </ul>
+            </div>
+            <div id="givenWord" class="list">
+                <ul class="letters">
+    
+                </ul>
+            </div>
+            <div id="scrabbleButtons">
+                <button class="sBtn" id="newRack">Nouvelles Lettres</button>
+                <button class="sBtn" id="submitWord">"C'est mon dernier mot !"</button>
+            </div>
+        </div>
+        <div class="game" id="rpc"></div>
+    </div>
     <section id="board">
         <div class="row">
-            <div class="case" id="case1"><span>1</span></div>
-            <div class="case" id="case2"><span>2</span></div>
-            <div class="case" id="case3"><span>3</span></div>
-            <div class="case" id="case4"><span>4</span></div>
-            <div class="case" id="case5"><span>5</span></div>
+            <div class="case" id="case1"><span><i class="fas fa-spade"></i></span><span class="caseN">1</span></div>
+            <div class="case" id="case2"><span><i class="far fa-sad-cry"></i></span><span class="caseN">2</span></div>
+            <div class="case" id="case3"><span><i class="fas fa-coins"></i></span><span class="caseN">3</span></div>
+            <div class="case" id="case4"><span><i class="fas fa-island-tropical"></i></span><span class="caseN">4</span></div>
+            <div class="case" id="case5"><span><i class="fas fa-chimney"></i></span><span class="caseN">5</span></div>
         </div>
         <div class="row row-middle">
-            <div class="case" id="case16"><span>16</span></div>
-            <div class="case" id="case6"><span>6</span></div>
+            <div class="case" id="case16"><span><i class="fas fa-hand-rock"></i></span><span class="caseN">16</span></div>
+            <div class="case" id="case6"><span><i class="fas fa-coins"></i></span><span class="caseN">6</span></div>
         </div>
         <div class="row row-middle">
-            <div class="case" id="case15"><span>15</span></div>
-            <div id="dice"><button id="rollDice">Roll the Dice</button></div>
-            <div class="case" id="case7"><span>7</span></div>
+            <div class="case" id="case15"><span><i class="fas fa-coins"></i></span><span class="caseN">15</span></div>
+            <div id="dice"><button id="rollDice"><i class="fas fa-dice fa-2x"></i></button></div>
+            <div class="case" id="case7"><span><i class="fas fa-heart-broken"></i></span><span class="caseN">7</span></div>
 
         </div>
         <div class="row row-middle">
-            <div class="case" id="case14"><span>14</span></div>
-            <div class="case" id="case8"><span>8</span></div>
+            <div class="case" id="case14"><span><i class="far fa-sad-tear"></i></span><span class="caseN">14</span></div>
+            <div class="case" id="case8"><span><i class="fas fa-island-tropical"></i></span><span class="caseN">8</span></div>
 
 
         </div>
         <div class="row">
-            <div class="case" id="case9"><span> 9 </span></div>
-            <div class="case" id="case10"><span> 10</span> </div>
-            <div class="case" id="case11"><span> 11 </span></div>
-            <div class="case" id="case12"><span> 12 </span></div>
-            <div class="case" id="case13"><span> 13 </span></div>
+            <div class="case" id="case9"><span><i class="fas fa-keyboard"></i></span><span class="caseN">9</span></div>
+            <div class="case" id="case10"><span> <i class="fas fa-frown-open"></i></span> <span class="caseN">10</span></div>
+            <div class="case" id="case11"><span> <i class="fas fa-coins"></i></span><span class="caseN">11</span></div>
+            <div class="case" id="case12"><span> <i class="fas fa-island-tropical"></i></span><span class="caseN">12</span></div>
+            <div class="case" id="case13"><span> <i class="fas fa-snake"></i></span><span class="caseN">13</span></div>
         </div>
         
         
