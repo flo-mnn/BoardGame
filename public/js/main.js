@@ -128,6 +128,14 @@ let startGame = document.querySelector('#startGame');
 // scrabble test
 
 // GET GAME SWITCH
+// remove display
+let games = divAllGames.querySelectorAll('.game')
+let removeDisplay = () => {
+    for (let i = 0; i < games.length; i++) {
+        games[i].classList.remove('displayBlock');
+       games[i].classList.remove('displayFlex');     
+    };
+};
 let getGame = (i) => {
     launch.style.display = "block";
     startGame.addEventListener('click',function(){
@@ -136,14 +144,17 @@ let getGame = (i) => {
             case 5:
                     whichGame = bricksGame;
                     drawBricksGame();
+                    removeDisplay();
                     whichGame.classList.add('displayBlock');
                 break;
             case 13:
                     whichGame = snakeGame;
+                    removeDisplay();
                     whichGame.classList.add('displayBlock');
                 break;
             case 9:
                     whichGame = scrabble;
+                    removeDisplay();
                     scrabble.classList.add("displayFlex");
                     newRack.style.display = "inline";
                     newRack.click();
@@ -151,6 +162,7 @@ let getGame = (i) => {
                 break;
             case 16:
                     whichGame = rpc;
+                    removeDisplay();
                     whichGame.classList.add('displayBlock');
                 break;
             default:
@@ -163,8 +175,7 @@ let getGame = (i) => {
 
 let removeGame = () => {
     divAllGames.style.display = "none";
-    whichGame.classList.remove('displayBlock');
-    whichGame.classList.remove('displayFlex');
+    removeDisplay();
     whichGame = undefined;
 };
 
@@ -177,7 +188,9 @@ let squareAction = (who) => {
           switch (i+1) {
               case 1:
                   allPlayers[who].bonus = true;
-                  alert(`Tu as gagné une carte "Bonus", conserve la précieusement, elle te permettra de doubler les points reçu à ton nouveau passage par la case 1.`)
+                  setTimeout(() => {
+                      alert(`Tu as gagné une carte "Bonus", conserve la précieusement, elle te permettra de doubler les points reçu à ton nouveau passage par la case 1.`)
+                  }, 700);
                   break;
               case 3: case 6: case 11: case 15:
                   allPlayers[who].score += 5;
@@ -195,11 +208,15 @@ let squareAction = (who) => {
                   break;
               case 4: case 8: case 12:
                   allPlayers[who].score += 0;
-                  alert(`Relax & Chill au soleil`);
+                  setTimeout(() => {
+                      alert(`Relax & Chill au soleil`);
+                  }, 700);
                   break;
               case 5: case 9: case 13: case 16:
-                  divAllGames.style.display = "block";
-                  getGame(i);
+                  setTimeout(() => {
+                      divAllGames.style.display = "block";
+                      getGame(i);
+                  }, 700);
                 //   bricks
                   break;
               default:
@@ -230,17 +247,18 @@ let pawnMove = (whoseTurn) => {
             player.score += (10*2);
             setTimeout(() => {
                 alert(`Tu as complété un tour, tu gagnes 20points grâce à ta carte "Double".`);
-            }, 200);
+            }, 700);
         } else {
             player.score += 10;
             setTimeout(() => {
                 alert(`Tu as complété un tour, tu gagnes 10points.`);
-            }, 200);
+            }, 700);
         };
 
     };
+
+    // move pawn;
     player.pawnPos = pawnPos;
-    console.log(player.pawnPos);
     cases[player.pawnPos].insertBefore(allPlayers[whoseTurn].pawn,cases[player.pawnPos].lastChild);
     printScore(whoseTurn);
 
@@ -269,7 +287,7 @@ let rollDice = () => {
         whoseTurn = -1;
     };
     steps = Math.ceil(Math.random()*6);
-    whoseTurn ++
+    whoseTurn ++;
     icon.removeAttribute('class');
     icon.setAttribute("class",allDices[steps -1]);
 };
@@ -703,7 +721,11 @@ let pointChecker = () => {
     for (let i = 0; i < word.length; i++) {
         scrabblePoints = switchPoints(scrabblePoints,word[i].textContent);
     };
-    alert(`Bravo, tu as gagné ${scrabblePoints} points !`);
+    if (scrabblePoints >0) {
+        alert(`Bravo, tu as gagné ${scrabblePoints} points !`);
+    } else {
+      allPlayers[whoseTurn].bonus = false;  
+    };
     allPlayers[whoseTurn].score += scrabblePoints;
     printScore(whoseTurn);
     removeGame();
