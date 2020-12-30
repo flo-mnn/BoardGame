@@ -1,0 +1,139 @@
+:root {
+    --turn : blue;
+}
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    padding-top: 5px;
+    position: relative;
+    font-family: cursive;
+}
+
+#settings {
+    position: absolute;
+    left: 5vw;
+    top: 10vh;
+}
+
+button {
+    border: none;
+    background-color:goldenrod;
+    padding: 8px;
+    border-radius: 5px;
+    font-size: normal;
+    font-weight: bold;
+    font-family: cursive;
+    color: white;
+    margin-top: 5px;
+}
+
+button:focus {
+    outline: none;
+    border: goldenrod 2px solid;
+    background-color: transparent;
+    color: goldenrod;
+}
+
+#rollDice {
+    background-color: var(--turn);
+    color: white;
+    border: none;
+};
+#rollDice:focus {
+    border: solid 2px var(--turn);
+    color: var(--turn);
+    background-color: transparent;
+}
+
+#board {
+    outline: 3px solid goldenrod;
+    outline-offset: -1px;
+    display: block;
+    margin: 0 auto;
+    height: fit-content;
+    width: fit-content;
+}
+
+#settings{
+    width: 20vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#players {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#allPawns {
+    width: 100%;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+#allPawns i {
+    margin: 0 7%;
+}
+
+.player {
+    width: 100%;
+    margin : 3px;
+}
+
+#scoreTable{
+    width: 100%;
+}
+.scoreDiv {
+    flex : 1;
+    display: flex;
+    justify-content: center;
+}
+
+.score {
+    display: none;
+}
+
+
+.row {
+    display: flex;
+}
+
+.row-middle {
+    justify-content: space-between;
+}
+
+.row:last-child {
+    flex-direction: row-reverse;
+}
+
+.case {
+    width: 9vw;
+    height: 9vw;
+    background-color: tomato;
+    border: lightgray solid 1px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+span {
+    font-size: xx-large;
+    color: pink;
+}
+
+#dice {
+    width: 9vw;
+    height: 9vw;
+    background-color: gray;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
