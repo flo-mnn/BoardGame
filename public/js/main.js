@@ -297,6 +297,7 @@ let rollDice = () => {
         whoseTurn = -1;
     };
     steps = Math.ceil(Math.random()*6);
+    steps = 16;
     whoseTurn ++;
     icon.removeAttribute('class');
     icon.setAttribute("class",allDices[steps -1]);
@@ -821,6 +822,8 @@ let finalWin = () => {
     for (let i = 0; i < tempL; i++) {
         battle.removeChild(battleGround[0]);   
     };
+    pl1.score = 0;
+    pl2.score = 0;
     manche =1;
     removeGame();
 };
@@ -846,11 +849,7 @@ let winOrLose = () => {
     };
 };
 let playRpc =(i)=> {
-    // empty battleground
-    tempL = battleGround.length
-    for (let i = 0; i < tempL; i++) {
-        battle.removeChild(battleGround[0]);   
-    };
+    
     // NEW SET
     manche ++;
     battle.appendChild(allHands[i].cloneNode(true));
@@ -862,7 +861,15 @@ let playRpc =(i)=> {
         gray.style.color = "gray";
         whoseHands();
         winOrLose();
+        
     }, 500);
+    setTimeout(() => {
+        // empty battleground
+        tempL = battleGround.length
+        for (let i = 0; i < tempL; i++) {
+            battle.removeChild(battleGround[0]);   
+        };
+    }, 2000);
 }
 for (let i = 0; i < handsClick.length; i++) {
     handsClick[i].addEventListener('click',function(){
@@ -872,7 +879,7 @@ for (let i = 0; i < handsClick.length; i++) {
             playRpc(i);
             setTimeout(() => {
                 finalWin();
-            }, 800);
+            }, 2100);
         };  
     });
 };
