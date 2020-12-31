@@ -163,7 +163,7 @@ let getGame = (i) => {
             case 16:
                     whichGame = rpc;
                     removeDisplay();
-                    whichGame.classList.add('displayBlock');
+                    whichGame.classList.add('displayFlex');
                 break;
             default:
                 console.log('error launch start mini game');
@@ -287,6 +287,7 @@ let rollDice = () => {
         whoseTurn = -1;
     };
     steps = Math.ceil(Math.random()*6);
+    steps = 16;
     whoseTurn ++;
     icon.removeAttribute('class');
     icon.setAttribute("class",allDices[steps -1]);
@@ -296,8 +297,10 @@ let rollDice = () => {
 let changeColor = () => {
     if (whoseTurn +1 < nPlayers) {
         document.documentElement.style.setProperty('--turn', allPlayers[whoseTurn +1].color);
+        document.documentElement.style.setProperty('--turnPrev', allPlayers[whoseTurn].color);
     } else {
         document.documentElement.style.setProperty('--turn', allPlayers[0].color);
+        document.documentElement.style.setProperty('--turnPrev', allPlayers[nPlayers -1].color);
     };
     // get the dice back
     icon.removeAttribute('class');
@@ -735,7 +738,142 @@ submitWord.addEventListener('click',pointChecker);
 // //SCRABBLE GAME END
 
 
+// // RPC GAME START
 
+
+
+let battle = document.getElementById('battle');
+let battleGround = battle.children;
+let handsDiv = document.getElementById('handChoose');
+let allHands = handsDiv.querySelectorAll('.hand');
+let handsClick = [];
+let manche = 1;
+var player;
+let pl1 = {
+    name: 'joueur',
+    score: 0,
+}
+
+let pl2 = {
+    name: 'ordi',
+    score:0,
+}
+let playersRpc = [pl1,pl2];
+let winnerRpc;
+
+for (let i = 0; i < allHands.length; i++) {
+    handsClick.push(allHands[i].querySelector('button'))  
+};
+
+let interpHands = (name) => {
+    if (name.includes('fa-hand-rock')) {
+        player = 'rock'; 
+    } else if (name.includes('fa-hand-scissors')){
+        player = 'scissors';
+    } else if (name.includes('fa-hand-paper')){
+        player = "paper";
+    } else {
+        player = "what"
+    }
+    return player
+}
+let whoseHands = () => {
+    for (let i = 0; i < battleGround.length; i++) {
+        let icon = battleGround[i].querySelector('i');
+        let className = icon.getAttribute('class');
+        console.log(className);
+        switch (i) {
+            case 0:
+                pl1.hand = interpHands(className)
+                console.log(pl1);
+                break;
+            case 1:
+                pl2.hand = interpHands(className)
+                console.log(pl2);
+                break;
+            default:
+                break;
+        }; 
+    };
+};
+let finalWin = () => {
+    if (pl1.score > pl2.score) {
+        winnerRpc = pl1;
+        alert(`Tu as gagné ${pl1.score} points`);
+        allPlayers[whoseTurn].score += pl1.score;
+        printScore(whoseTurn)
+    } else if (pl1.score == pl2.score) {
+        winnerRpc = false;
+        alert(`Match nul... Continuez le jeu !`);
+    } else {
+        winnerRpc = pl2;
+        alert(`Tu as perdu... Remets moi ta carte "Bonus"`);
+        allPlayers[whoseTurn].bonus = false;
+    };
+    // empty Game
+    tempL = battleGround.length
+    for (let i = 0; i < tempL; i++) {
+        battle.removeChild(battleGround[0]);   
+    };
+    manche =1;
+    removeGame();
+};
+let winOrLose = () => {
+    if (pl1.hand == "rock" && pl2.hand == "scissors") {
+        pl1.score ++;
+    } else if(pl1.hand =="rock" && pl2.hand =="paper") {
+        pl2.score++
+    } else if(pl1.hand =="rock" && pl2.hand =="rock") {
+        manche --;
+    } else if(pl1.hand =="paper" && pl2.hand =="rock") {
+        pl1.score++;
+    } else if(pl1.hand =="paper" && pl2.hand =="scissors") {
+        pl2.score++;
+    } else if(pl1.hand =="paper" && pl2.hand =="paper") {
+        manche --;
+    } else if(pl1.hand =="scissors" && pl2.hand =="paper") {
+        pl1.score++;
+    } else if(pl1.hand =="scissors" && pl2.hand =="rock") {
+        pl2.score++;
+    } else if(pl1.hand =="scissors" && pl2.hand =="scissors") {
+        manche --;
+    };
+};
+let playRpc =(i)=> {
+    // empty battleground
+    tempL = battleGround.length
+    for (let i = 0; i < tempL; i++) {
+        battle.removeChild(battleGround[0]);   
+    };
+    // NEW SET
+    manche ++;
+    battle.appendChild(allHands[i].cloneNode(true));
+    setTimeout(() => {
+        let random = Math.floor(Math.random()*allHands.length);
+        let otherHand = allHands[random].cloneNode(true);
+        battle.appendChild(otherHand);
+        let gray = otherHand.querySelector('i');
+        gray.style.color = "gray";
+        whoseHands();
+        winOrLose();
+    }, 500);
+}
+for (let i = 0; i < handsClick.length; i++) {
+    handsClick[i].addEventListener('click',function(){
+        if (manche<3) {
+            playRpc(i);
+        } else if (manche ==3) {
+            playRpc(i);
+            setTimeout(() => {
+                finalWin();
+            }, 800);
+        };  
+    });
+};
+
+
+
+// // RPC GAME END
 
 
 
