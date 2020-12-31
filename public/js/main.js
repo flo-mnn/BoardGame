@@ -297,7 +297,6 @@ let rollDice = () => {
         whoseTurn = -1;
     };
     steps = Math.ceil(Math.random()*6);
-    steps = 5;
     whoseTurn ++;
     icon.removeAttribute('class');
     icon.setAttribute("class",allDices[steps -1]);
