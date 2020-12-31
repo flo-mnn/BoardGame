@@ -36,6 +36,8 @@ let changeRpc = () => {
 };
 window.setInterval(changeRpc, 900);
 
+// bricks credit
+let brickCred = document.querySelector('#bricksCredits');
 
 // start btn
 let start = document.querySelector('#start');
@@ -146,11 +148,7 @@ let getGame = (i) => {
                     drawBricksGame();
                     removeDisplay();
                     whichGame.classList.add('displayBlock');
-                break;
-            case 13:
-                    whichGame = snakeGame;
-                    removeDisplay();
-                    whichGame.classList.add('displayBlock');
+                    brickCred.classList.add('displayBlock');
                 break;
             case 9:
                     whichGame = scrabble;
@@ -175,6 +173,7 @@ let getGame = (i) => {
 
 let removeGame = () => {
     divAllGames.style.display = "none";
+    brickCred.classList.remove('displayBlock');
     removeDisplay();
     whichGame = undefined;
 };
@@ -187,10 +186,14 @@ let squareAction = (who) => {
         if (i === allPlayers[who].pawnPos) {
           switch (i+1) {
               case 1:
-                  allPlayers[who].bonus = true;
                   setTimeout(() => {
-                      alert(`Tu as gagné une carte "Bonus", conserve la précieusement, elle te permettra de doubler les points reçu à ton nouveau passage par la case 1.`)
-                  }, 700);
+                      if (allPlayers[who.bonus == false]) {
+                          alert(`Tu as gagné une carte "Bonus", conserve la précieusement, elle te permettra de doubler les points reçu à ton nouveau passage par la case 1.`)
+                        } else {
+                            alert('Tu as déjà ta carte "Bonus" je vois, bonne route !')
+                        }
+                    }, 700);
+                    allPlayers[who].bonus = true;
                   break;
               case 3: case 6: case 11: case 15:
                   allPlayers[who].score += 5;
@@ -212,7 +215,14 @@ let squareAction = (who) => {
                       alert(`Relax & Chill au soleil`);
                   }, 700);
                   break;
-              case 5: case 9: case 13: case 16:
+              case 13:
+                  allPlayers[who].score *= 2;
+                  printScore(who);
+                  setTimeout(() => {
+                      alert(`JACKPOT! Tu viens de doubler tes points !`)
+                  }, 700);
+                  break;
+              case 5: case 9: case 16:
                   setTimeout(() => {
                       divAllGames.style.display = "block";
                       getGame(i);
@@ -287,7 +297,7 @@ let rollDice = () => {
         whoseTurn = -1;
     };
     steps = Math.ceil(Math.random()*6);
-    steps = 16;
+    steps = 5;
     whoseTurn ++;
     icon.removeAttribute('class');
     icon.setAttribute("class",allDices[steps -1]);
@@ -506,8 +516,8 @@ function collisionDetection() {
                 x = canvasB.width/2;
                 y = canvasB.height-30;
                 // no reload possible her so, math.abs to slow the game
-                dx = Math.abs(dx)/2;
-                dy = -(Math.abs(dy)/2);
+                dx = Math.abs(dx)/1.4;
+                dy = -(Math.abs(dy)/1.4);
                 removeGame();
             };
         }
@@ -569,8 +579,8 @@ function drawBricksGame(){
                 lives = 3;
                 x = canvasB.width/2;
                 y = canvasB.height-30;
-                dx = Math.abs(dx)/2;
-                dy = -(Math.abs(dy)/2);
+                dx = Math.abs(dx)/1.4;
+                dy = -(Math.abs(dy)/1.4);
                 removeGame();
             }
             else {
@@ -781,15 +791,12 @@ let whoseHands = () => {
     for (let i = 0; i < battleGround.length; i++) {
         let icon = battleGround[i].querySelector('i');
         let className = icon.getAttribute('class');
-        console.log(className);
         switch (i) {
             case 0:
                 pl1.hand = interpHands(className)
-                console.log(pl1);
                 break;
             case 1:
                 pl2.hand = interpHands(className)
-                console.log(pl2);
                 break;
             default:
                 break;
@@ -891,7 +898,7 @@ dice.addEventListener('click',function(e){
         rollDice();
         pawnMove(whoseTurn);
         squareAction(whoseTurn);
-        console.log(allPlayers[whoseTurn]);
+        // console.log(allPlayers[whoseTurn]);
     }, 3300);
     setTimeout(() => {
         changeColor();
