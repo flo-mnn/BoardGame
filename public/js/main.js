@@ -186,12 +186,12 @@ let squareAction = (who) => {
         if (i === allPlayers[who].pawnPos) {
           switch (i+1) {
               case 1:
-                  setTimeout(() => {
-                      if (allPlayers[who.bonus == false]) {
-                          alert(`Tu as gagné une carte "Bonus", conserve la précieusement, elle te permettra de doubler les points reçu à ton nouveau passage par la case 1.`)
-                        } else {
+                  setTimeout(() => { 
+                         if(allPlayers[who].bonus == true) {
                             alert('Tu as déjà ta carte "Bonus" je vois, bonne route !')
-                        }
+                        } else {
+                            alert(`Tu as gagné une carte "Bonus", conserve la précieusement, elle te permettra de doubler les points reçu à ton nouveau passage par la case 1.`)
+                        };
                     }, 700);
                     allPlayers[who].bonus = true;
                   break;
