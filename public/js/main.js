@@ -191,9 +191,9 @@ let squareAction = (who) => {
                             alert('Tu as déjà ta carte "Bonus" je vois, bonne route !')
                         } else {
                             alert(`Tu as gagné une carte "Bonus", conserve la précieusement, elle te permettra de doubler les points reçu à ton nouveau passage par la case 1.`)
+                            allPlayers[who].bonus = true;
                         };
                     }, 700);
-                    allPlayers[who].bonus = true;
                   break;
               case 3: case 6: case 11: case 15:
                   allPlayers[who].score += 5;
