@@ -45,7 +45,7 @@ body {
     display: none;
 }
 
-#launchGame {
+#launchAnyMiniGame {
     width: 100%;
     height: 100%;
     display: flex;
@@ -57,11 +57,11 @@ body {
 
 }
 
-#launchGame p {
+#launchAnyMiniGame p {
     margin: 1vw 0;
 }
 
-#launchGame .text {
+#launchAnyMiniGame .text {
     margin: 1vw;
 }
 
@@ -310,7 +310,7 @@ span {
 /* scrabble end */
 
 /* RPC start */
-#rpc {
+#rps {
     width: 100%;
     height: 100%;
     background-color: aqua;
@@ -354,13 +354,13 @@ span {
     padding: 10px;
     background-color: white;
 }
-#rpc .fa-hand-rock {
+#rps .fa-hand-rock {
     color: var(--turnPrev);
 }
-#rpc .fa-hand-scissors {
+#rps .fa-hand-scissors {
     color: var(--turnPrev);
 }
-#rpc .fa-hand-paper {
+#rps .fa-hand-paper {
     color: var(--turnPrev);
 }
 #handChoose button:focus, #battle button:focus {
